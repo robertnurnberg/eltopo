@@ -256,6 +256,7 @@ bool MeshPincher::pull_apart_vertex( size_t vertex_index, const std::vector< Tri
 
 void MeshPincher::process_mesh()
 {
+    std::cout << "starting in MeshPincher:process_mesh" << std::endl; 
     
     for ( size_t i = 0; i < m_surf.get_num_vertices(); ++i )
     {
@@ -265,6 +266,7 @@ void MeshPincher::process_mesh()
         
         if ( connected_components.size() > 1 ) 
         {
+            std::cout << "CC size: " << connected_components.size() << std::endl; 
             pull_apart_vertex( i, connected_components );
         }
     }

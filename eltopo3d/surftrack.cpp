@@ -128,7 +128,7 @@ SurfTrack::SurfTrack( const std::vector<Vec3d>& vs,
     m_triangle_change_history()
 {
     
-    if ( m_verbose )
+    if ( true || m_verbose )
     {
         std::cout << " ======== SurfTrack ======== " << std::endl;   
         std::cout << "m_allow_topology_changes: " << m_allow_topology_changes << std::endl;
@@ -329,6 +329,7 @@ void SurfTrack::remove_vertex( size_t vertex_index )
 
 void SurfTrack::defrag_mesh( )
 {
+    std::cout << "enter defrag_mesh " << std::endl;
     
     std::vector<Vec2st> old_edges = m_mesh.m_edges;
     
@@ -584,10 +585,13 @@ void SurfTrack::assert_no_degenerate_triangles( )
 void SurfTrack::trim_non_manifold( std::vector<size_t>& triangle_indices )
 {   
     
+    std::cout << "enter trim_non_manifold " << std::endl;
     // If we're not allowing non-manifold, assert we don't have any
     
     if ( false == m_allow_non_manifold )
     {
+
+        std::cout << "checking for non manifold elements " << std::endl;
         // check for edges incident on more than 2 triangles
         
         for ( size_t i = 0; i < m_mesh.m_edge_to_triangle_map.size(); ++i )
@@ -750,12 +754,16 @@ void SurfTrack::improve_mesh( )
 
 void SurfTrack::topology_changes( )
 {
+
+    std::cout << "Enter topology_changes " << std::endl;
     
     if ( false == m_allow_topology_changes )
     {
         return;
     }
     
+    std::cout << "Still in topology_changes " << std::endl;
+
     m_merger.process_mesh();
     
     m_pincher.process_mesh();

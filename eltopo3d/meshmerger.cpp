@@ -404,6 +404,7 @@ bool MeshMerger::zipper_edges( size_t edge_index_a, size_t edge_index_b )
 void MeshMerger::process_mesh( )
 {
     
+    std::cout << "starting in MeshMerger:process_mesh" << std::endl; 
     std::queue<Vec2st> edge_edge_candidates;
     
     //
@@ -414,10 +415,13 @@ void MeshMerger::process_mesh( )
     
     while ( merge_occured )
     {
+        std::cout << "while"; 
         merge_occured = false;
         
         // sorted by proximity so we merge closest pairs first
         std::vector<SortableEdgeEdgeProximity> proximities;
+
+        double min_dist = 1e10;
         
         for(size_t i = 0; i < m_surf.m_mesh.m_edges.size(); i++)
         {
@@ -459,6 +463,11 @@ void MeshMerger::process_mesh( )
                                               m_surf.get_position(e1[1]), 
                                               distance, s0, s2, normal );
                     
+                    if (distance < min_dist) {
+                      min_dist = distance;
+                      std::cout << "min_dist = " << min_dist
+                              << ", eps = " << m_surf.m_merge_proximity_epsilon << std::endl; 
+                    }
                     if (distance < m_surf.m_merge_proximity_epsilon)
                     {
                         
